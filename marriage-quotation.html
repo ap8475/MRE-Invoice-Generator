@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marriage Function Proposal</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --forest:#0f4b24;
+      --forest2:#17652f;
+      --gold:#c9a227;
+      --gold2:#e8c98a;
+      --paper:#ffffff;
+      --cream:#fffdf7;
+      --ink:#1b1b1b;
+      --muted:#666;
+      --line:#e7dcc1;
+      --dark:#101214;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Outfit,sans-serif;
+      background:#111315;
+      color:#eee;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns:560px 1fr;
+      min-height:100vh;
+    }
+
+    .form-panel{
+      height:100vh;
+      overflow:auto;
+      background:linear-gradient(180deg,#171a1d,#101214);
+      border-right:1px solid rgba(201,162,39,.22);
+    }
+
+    .form-header{
+      padding:22px 26px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      border-bottom:1px solid rgba(201,162,39,.22);
+      background:rgba(201,162,39,.05);
+    }
+
+    .brand-icon{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      overflow:hidden;
+      flex-shrink:0;
+    }
+
+    .brand-icon img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .form-header h1{
+      font-family:"Cormorant Garamond",serif;
+      color:var(--gold2);
+      font-size:24px;
+      line-height:1.05;
+    }
+
+    .form-header p{
+      margin-top:3px;
+      font-size:10px;
+      letter-spacing:2px;
+      color:rgba(255,255,255,.4);
+      text-transform:uppercase;
+    }
+
+    .form-body{padding:18px 26px 26px}
+
+    .back{
+      color:var(--gold);
+      text-decoration:none;
+      font-size:11px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+
+    .section-label{
+      margin:20px 0 10px;
+      padding-bottom:7px;
+      border-bottom:1px solid rgba(201,162,39,.22);
+      font-size:10px;
+      color:var(--gold);
+      letter-spacing:2px;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .field{margin-bottom:10px}
+
+    .field label{
+      display:block;
+      margin-bottom:4px;
+      font-size:10px;
+      color:rgba(255,255,255,.45);
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width:100%;
+      border:1px solid rgba(255,255,255,.11);
+      background:rgba(255,255,255,.04);
+      color:#eee;
+      border-radius:6px;
+      padding:9px 10px;
+      font-family:Outfit;
+      font-size:12.5px;
+      outline:none;
+    }
+
+    .field select option{background:#171a1d;color:#eee}
+
+    .field textarea{
+      min-height:58px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus{
+      border-color:rgba(201,162,39,.55);
+      background:rgba(255,255,255,.065);
+    }
+
+    .field-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+
+    .selector-row{
+      display:grid;
+      grid-template-columns:1fr 86px 86px;
+      gap:8px;
+      align-items:end;
+    }
+
+    .item-card{
+      border:1px solid rgba(201,162,39,.2);
+      background:rgba(201,162,39,.045);
+      border-radius:8px;
+      padding:10px;
+      margin-bottom:9px;
+    }
+
+    .item-card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+      color:var(--gold2);
+      font-size:11px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-add,
+    .btn-small{
+      font-family:Outfit;
+      cursor:pointer;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-add{
+      width:100%;
+      border-radius:7px;
+      padding:12px 16px;
+      text-transform:uppercase;
+      letter-spacing:1.3px;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--forest),var(--forest2));
+      color:var(--gold2);
+      border:1px solid var(--gold);
+    }
+
+    .btn-secondary{
+      margin-top:8px;
+      background:transparent;
+      color:var(--gold);
+      border:1px solid rgba(201,162,39,.35);
+    }
+
+    .btn-add{
+      background:rgba(201,162,39,.08);
+      border:1px dashed rgba(201,162,39,.45);
+      color:var(--gold2);
+    }
+
+    .btn-small{
+      border:1px solid rgba(201,162,39,.28);
+      background:transparent;
+      color:var(--gold);
+      padding:8px 10px;
+      border-radius:5px;
+      font-size:11px;
+      white-space:nowrap;
+    }
+
+    .help-text{
+      color:rgba(255,255,255,.32);
+      font-size:11px;
+      line-height:1.55;
+      margin:6px 0 10px;
+    }
+
+    .preview-panel{
+      height:100vh;
+      overflow:auto;
+      background:#f3f0e7;
+      padding:28px 18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .preview-label{
+      color:#777;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+
+    /* ── DOC PAGE (live preview) ─────────────────────────── */
+    .doc-page{
+      width:794px;
+      background:var(--paper);
+      color:var(--ink);
+      box-shadow:0 18px 60px rgba(0,0,0,.32);
+      position:relative;
+      overflow:visible;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .gold-frame{
+      position:absolute;
+      inset:12px;
+      border:3px double var(--gold);
+      pointer-events:none;
+      z-index:3;
+    }
+
+    .corner{
+      position:absolute;
+      width:32px;
+      height:32px;
+      border-color:var(--gold);
+      z-index:4;
+    }
+
+    .c1{top:18px;left:18px;border-top:2px solid;border-left:2px solid}
+    .c2{top:18px;right:18px;border-top:2px solid;border-right:2px solid}
+    .c3{bottom:18px;left:18px;border-bottom:2px solid;border-left:2px solid}
+    .c4{bottom:18px;right:18px;border-bottom:2px solid;border-right:2px solid}
+
+    .watermark{
+      position:absolute;
+      top:51%;
+      left:50%;
+      transform:translate(-50%,-50%) rotate(-28deg);
+      font-family:"Cormorant Garamond",serif;
+      font-size:88px;
+      font-weight:700;
+      color:rgba(15,75,36,.03);
+      letter-spacing:8px;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+
+    .doc-content{
+      position:relative;
+      z-index:2;
+      padding:26px 50px 20px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .doc-top{
+      display:grid;
+      grid-template-columns:74px 1fr;
+      gap:12px;
+      align-items:center;
+      padding:0 0 6px;
+      text-align:left;
+      border-bottom:1px solid var(--line);
+      margin-bottom:6px;
+    }
+
+    .doc-logo{
+      width:auto;
+      height:80px;
+      object-fit:contain;
+    }
+
+    .doc-title{
+      font-family:"Cormorant Garamond",serif;
+      color:var(--forest);
+      font-size:23px;
+      font-weight:700;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      line-height:1;
+    }
+
+    .doc-subtitle{
+      font-family:"Cormorant Garamond",serif;
+      color:var(--forest);
+      font-size:14px;
+      font-weight:600;
+      margin-top:2px;
+    }
+
+    .hotel-line{
+      font-size:8.8px;
+      color:#555;
+      line-height:1.35;
+      margin-top:3px;
+    }
+
+    .intro-note{
+      grid-column:1 / -1;
+      font-size:9.4px;
+      line-height:1.45;
+      color:#444;
+      background:#fffaf0;
+      border-left:3px solid var(--gold);
+      padding:6px 9px;
+      margin-top:2px;
+    }
+
+    .quote-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin:4px 0 6px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      background:#fffaf0;
+      border-radius:4px;
+      font-size:9.4px;
+      color:#555;
+    }
+
+    .meta-box{
+      border:none;
+      background:transparent;
+      padding:0;
+      border-radius:0;
+      font-size:9.4px;
+      color:#555;
+      white-space:nowrap;
+    }
+
+    .meta-box b{
+      display:inline;
+      color:var(--forest);
+      font-size:10px;
+      margin-left:4px;
+    }
+
+    .meta-sep{
+      width:1px;
+      height:14px;
+      background:var(--line);
+      flex-shrink:0;
+    }
+
+    .client-band{
+      background:var(--forest);
+      color:white;
+      border-left:7px solid var(--gold);
+      border-right:7px solid var(--gold);
+      border-radius:4px;
+      padding:10px 15px;
+      margin:4px 0 6px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    .client-band h4{
+      color:var(--gold2);
+      font-size:8.5px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      margin-bottom:3px;
+    }
+
+    .client-band p{
+      font-size:10.6px;
+      line-height:1.55;
+      color:rgba(255,255,255,.88);
+    }
+
+    .client-band strong{
+      color:white;
+      font-size:13px;
+    }
+
+    .section-heading{
+      font-family:"Cormorant Garamond",serif;
+      color:var(--forest);
+      font-size:18px;
+      font-weight:700;
+      margin:6px 0 4px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .section-heading:after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+    }
+
+    .quote-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:10.7px;
+      margin-bottom:5px;
+    }
+
+    .quote-table th{
+      background:var(--forest);
+      color:var(--gold2);
+      padding:5px 8px;
+      text-align:left;
+      font-size:8px;
+      letter-spacing:1.25px;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+
+    .quote-table th:last-child,
+    .quote-table td:last-child{
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .quote-table td{
+      padding:5px 8px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      color:#333;
+    }
+
+    .item-name{
+      font-weight:700;
+      color:#172a1d;
+      font-size:11px;
+    }
+
+    .item-desc{
+      margin-top:2px;
+      color:#777;
+      font-size:9.4px;
+      line-height:1.35;
+    }
+
+    .terms-heading{
+      font-family:Outfit,sans-serif;
+      color:#6b5c35;
+      font-size:9px;
+      font-weight:700;
+      margin:70px 0 3px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .terms-heading:after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:linear-gradient(90deg,rgba(201,162,39,.45),transparent);
+    }
+
+    .notes{
+      font-size:8.7px;
+      line-height:1.38;
+      color:#666;
+      background:#fffdf8;
+      border:1px solid rgba(231,220,193,.7);
+      padding:5px 7px;
+      border-radius:3px;
+      white-space:pre-line;
+    }
+
+    .notes strong{
+      color:#3f3518;
+      font-weight:700;
+    }
+
+    .amount-words{
+      margin-top:6px;
+      background:#fffaf0;
+      border:1px solid var(--line);
+      border-left:3px solid var(--gold);
+      border-radius:4px;
+      padding:5px 10px;
+      font-size:9.6px;
+      line-height:1.45;
+      color:#444;
+    }
+
+    .amount-words b{
+      color:var(--forest);
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      font-size:8.4px;
+      display:block;
+      margin-bottom:2px;
+    }
+
+    .qty-hint{
+      font-size:10.5px;
+      color:rgba(255,255,255,.32);
+      line-height:1.4;
+      margin-top:-4px;
+      margin-bottom:5px;
+    }
+
+    .bottom-area{margin-top:14px}
+
+    .totals{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:6px;
+    }
+
+    .totals-box{
+      width:285px;
+      border:1px solid var(--line);
+      border-radius:4px;
+      overflow:hidden;
+      background:white;
+    }
+
+    .total-row{
+      display:flex;
+      justify-content:space-between;
+      padding:7px 10px;
+      border-bottom:1px solid var(--line);
+      font-size:10.6px;
+      color:#333;
+    }
+
+    .total-row.grand{
+      background:var(--forest);
+      color:var(--gold2);
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .sign-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin-top:8px;
+    }
+
+    .thanks{
+      font-family:"Dancing Script",cursive;
+      color:var(--forest);
+      font-size:18px;
+    }
+
+    .sign{
+      text-align:center;
+      width:180px;
+      color:#555;
+      font-size:8.5px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .sign img{
+      height:42px;
+      max-width:150px;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 3px;
+    }
+
+    .sign-line{
+      border-top:1px solid #333;
+      padding-top:4px;
+    }
+
+    .doc-footer{
+      margin-top:7px;
+      background:var(--forest);
+      color:rgba(255,255,255,.65);
+      padding:8px 12px;
+      font-size:8.5px;
+      display:flex;
+      justify-content:space-between;
+      border-radius:3px;
+      gap:16px;
+    }
+
+    @media print{
+      @page{size:A4;margin:0}
+      *{
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+        color-adjust:exact !important;
+      }
+      body,html{background:white !important;margin:0 !important;padding:0 !important;}
+      .app{display:block !important}
+      .form-panel{display:none !important}
+      .preview-panel{
+        padding:0 !important;margin:0 !important;
+        display:block !important;background:white !important;
+        height:auto !important;overflow:visible !important;
+      }
+      .preview-label{display:none !important}
+      .doc-page{
+        width:210mm !important;min-height:297mm !important;
+        box-shadow:none !important;border-radius:0 !important;
+        margin:0 !important;padding:0 !important;
+      }
+    }
+
+    .modal-backdrop{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.7);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-backdrop.open{display:flex}
+
+    .modal{
+      width:440px;
+      max-width:100%;
+      background:#171a1d;
+      border:1px solid rgba(201,162,39,.4);
+      border-radius:12px;
+      padding:22px;
+      box-shadow:0 20px 70px rgba(0,0,0,.5);
+    }
+
+    .modal h2{
+      font-family:"Cormorant Garamond",serif;
+      color:var(--gold2);
+      font-size:24px;
+      margin-bottom:12px;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    @media(max-width:900px){
+      .app{grid-template-columns:1fr}
+      .form-panel{height:auto}
+      .preview-panel{display:none}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+  <aside class="form-panel">
+    <div class="form-header">
+      <div class="brand-icon"><img src="logo.png" alt="Logo" /></div>
+      <div>
+        <h1>Marriage Proposal</h1>
+        <p>Mountain Retreat Ecostay</p>
+      </div>
+    </div>
+
+    <div class="form-body">
+      <a class="back" href="index.html">← Back to document studio</a>
+
+      <div class="section-label">Lead / Client Details</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Proposal No.</label>
+          <input id="quoteNo" value="MRE-WED-001" oninput="updateDoc()" />
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="quoteDate" oninput="updateDoc()" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Client / Family Name</label>
+        <input id="clientName" placeholder="e.g. Sharma Family" oninput="updateDoc()" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Phone</label>
+          <input id="clientPhone" placeholder="Contact number" oninput="updateDoc()" />
+        </div>
+        <div class="field">
+          <label>Event Date</label>
+          <input type="date" id="eventDate" oninput="updateDoc()" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Expected Guests</label>
+          <input type="number" id="guestCount" value="100" oninput="syncGuestLinkedItems(); updateDoc();" />
+        </div>
+        <div class="field">
+          <label>Function Type</label>
+          <input id="functionType" value="Marriage / Reception" oninput="updateDoc()" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Document Title</label>
+        <input id="packageTitle" value="Wedding Function Discussion Proposal" oninput="updateDoc()" />
+      </div>
+
+      <div class="field">
+        <label>Short Intro Message</label>
+        <textarea id="introMessage" oninput="updateDoc()">Thank you for considering Mountain Retreat Ecostay for your marriage function. Below is an indicative discussion proposal to help you plan venue, food, stay, transport, decoration and event support.</textarea>
+      </div>
+
+      <div class="section-label">Add / Edit Dropdown Items</div>
+      <p class="help-text">Select item to add. Click Edit to change dropdown item name, description, quantity or price.</p>
+
+      <div class="selector-row">
+        <div class="field">
+          <label>Select Item</label>
+          <select id="itemSelect"></select>
+        </div>
+        <button class="btn-small" onclick="addSelectedItem()">Add</button>
+        <button class="btn-small" onclick="editSelectedLibraryItem()">Edit</button>
+      </div>
+
+      <button class="btn-add" onclick="openItemModal()">+ Create / Save Custom Item</button>
+
+      <div class="section-label">Selected Proposal Items</div>
+      <div id="itemsWrap"></div>
+
+      <div class="section-label">Advance / Validity</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Suggested Advance (%)</label>
+          <input type="number" id="advancePercent" value="25" min="0" max="100" oninput="updateDoc()" />
+        </div>
+        <div class="field">
+          <label>Validity</label>
+          <input id="validity" value="7 days from proposal date" oninput="updateDoc()" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Terms and Conditions</label>
+        <textarea id="terms" oninput="updateDoc()">This is an indicative discussion proposal, not a final tax invoice.
+Final price may change based on confirmed date, guest count, menu selection, room availability, decoration theme and transport requirement.
+Outside decoration, DJ, sound or catering is subject to prior approval.</textarea>
+      </div>
+
+      <button class="btn-primary" onclick="downloadProposalPDF()">🖨️ &nbsp; Print / Save PDF</button>
+      <button class="btn-secondary" onclick="resetPage()">Reset Proposal</button>
+    </div>
+  </aside>
+
+  <main class="preview-panel">
+    <div class="preview-label">Live Proposal Preview</div>
+
+    <div class="doc-page" id="proposalPage">
+      <div class="gold-frame"></div>
+      <div class="corner c1"></div>
+      <div class="corner c2"></div>
+      <div class="corner c3"></div>
+      <div class="corner c4"></div>
+      <div class="watermark">MRE</div>
+      <div class="doc-content" id="preview"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="itemModal">
+  <div class="modal">
+    <h2 id="modalTitle">Add Custom Item</h2>
+    <input type="hidden" id="modalMode" value="new" />
+    <input type="hidden" id="modalItemId" value="" />
+
+    <div class="field">
+      <label>Item Name</label>
+      <input id="modalItemName" placeholder="e.g. Premium Stage Decoration" />
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea id="modalItemDesc" placeholder="Description that will appear below item name"></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Default Qty</label>
+        <input type="number" id="modalItemQty" value="1" />
+      </div>
+      <div class="field">
+        <label>Default Rate</label>
+        <input type="number" id="modalItemRate" value="0" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>
+        <input type="checkbox" id="modalGuestLinked" style="width:auto;margin-right:6px" />
+        Link qty with expected guests
+      </label>
+    </div>
+
+    <div class="field">
+      <label>Divisor Factor <span style="color:rgba(255,255,255,.28);text-transform:none;letter-spacing:0">(only for guest-linked item)</span></label>
+      <input type="number" id="modalDivisor" value="1" min="1" placeholder="Example: 4 means 4 guests per room" />
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveLibraryItem()">Save Item</button>
+      <button class="btn-secondary" onclick="closeItemModal()" style="margin-top:0">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CUSTOM_ITEMS_KEY = "mre_marriage_custom_items_v2";
+  const LIBRARY_OVERRIDES_KEY = "mre_marriage_library_overrides_v1";
+  let itemCounter = 0;
+
+  const defaultLibrary = [
+    {id:"hall",name:"Marriage Hall / Function Space",desc:"Use of hall / function area for marriage, reception or family gathering. Includes basic space coordination and setup guidance.",qty:1,rate:28000},
+    {id:"decoration",name:"Decoration",desc:"Decoration support for entrance, stage/backdrop, sitting area and basic floral or theme setup as per discussion.",qty:1,rate:88000},
+    {id:"catering",name:"Catering & Fooding with Menu",desc:"Fooding package as per selected menu. Final rate depends on menu selection, meal type and confirmed guest count.",qty:100,rate:970,guestLinked:true,divisor:1},
+    {id:"accommodation",name:"Accommodation",desc:"Room stay arrangement for family and guests. Quantity can be entered as number of rooms or room-nights.",qty:25,rate:1200,guestLinked:true,divisor:4},
+    {id:"transport",name:"Transportation - 9 Seater",desc:"9-seater vehicle support for each stay / local movement within 10 km as discussed. Extra route or distance may be charged separately.",qty:1,rate:4400},
+    {id:"music",name:"Music Event Team",desc:"Music / event team support for function ambience, announcements and basic event coordination.",qty:1,rate:29000}
+  ];
+
+  function readJson(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));}catch(e){return fallback;}}
+  function writeJson(key,value){localStorage.setItem(key,JSON.stringify(value));}
+  function loadCustomItems(){return readJson(CUSTOM_ITEMS_KEY,[]);}
+  function saveCustomItems(items){writeJson(CUSTOM_ITEMS_KEY,items);}
+  function loadOverrides(){return readJson(LIBRARY_OVERRIDES_KEY,{});}
+  function saveOverride(id,updatedItem){const o=loadOverrides();o[id]=updatedItem;writeJson(LIBRARY_OVERRIDES_KEY,o);}
+
+  function getLibrary(){
+    const overrides=loadOverrides();
+    const mergedDefaults=defaultLibrary.map(item=>({...item,...(overrides[item.id]||{})}));
+    return [...mergedDefaults,...loadCustomItems()];
+  }
+
+  function populateDropdown(selectedId){
+    const select=document.getElementById("itemSelect");
+    select.innerHTML="";
+    getLibrary().forEach(item=>{
+      const opt=document.createElement("option");
+      opt.value=item.id;
+      opt.textContent=`${item.name} — ₹${fmt(item.rate)}`;
+      select.appendChild(opt);
+    });
+    if(selectedId) select.value=selectedId;
+  }
+
+  function v(id){return(document.getElementById(id)?.value||"").trim();}
+
+  function fmt(n){return new Intl.NumberFormat("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(n)||0);}
+
+  function d(s){
+    if(!s) return "—";
+    return new Date(s+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+  }
+
+  function getSelectedLibraryItem(){const id=document.getElementById("itemSelect").value;return getLibrary().find(item=>item.id===id);}
+  function addSelectedItem(){const item=getSelectedLibraryItem();if(item)addItem(item);}
+
+  function editSelectedLibraryItem(){
+    const item=getSelectedLibraryItem();if(!item)return;
+    document.getElementById("modalTitle").textContent="Edit Dropdown Item";
+    document.getElementById("modalMode").value="edit";
+    document.getElementById("modalItemId").value=item.id;
+    document.getElementById("modalItemName").value=item.name||"";
+    document.getElementById("modalItemDesc").value=item.desc||"";
+    document.getElementById("modalItemQty").value=item.qty||1;
+    document.getElementById("modalItemRate").value=item.rate||0;
+    document.getElementById("modalGuestLinked").checked=!!item.guestLinked;
+    document.getElementById("modalDivisor").value=item.divisor||1;
+    document.getElementById("itemModal").classList.add("open");
+  }
+
+  function addItem(data={}){
+    itemCounter++;
+    const id=itemCounter;
+    const wrap=document.createElement("div");
+    wrap.className="item-card";
+    wrap.id="item-"+id;
+    const divisor=Math.max(1,Number(data.divisor)||1);
+    const qty=data.guestLinked?Math.ceil((Number(v("guestCount"))||data.qty||1)/divisor):(data.qty||1);
+    wrap.innerHTML=`
+      <div class="item-card-head">
+        <span>Item ${id}</span>
+        <button class="btn-small" onclick="removeItem(${id})">Remove</button>
+      </div>
+      <input type="hidden" class="guest-linked-input" value="${data.guestLinked?"yes":"no"}" />
+      <input type="hidden" class="divisor-input" value="${divisor}" />
+      <div class="field">
+        <label>Item Name</label>
+        <input class="item-name-input" value="${escapeAttr(data.name||"")}" placeholder="e.g. Marriage Hall" oninput="updateDoc()" />
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea class="item-desc-input" placeholder="Small description shown below item name" oninput="updateDoc()">${escapeHtml(data.desc||"")}</textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Qty</label>
+          <input type="number" class="item-qty-input" value="${qty}" oninput="updateDoc()" />
+        </div>
+        <div class="field">
+          <label>Rate</label>
+          <input type="number" class="item-rate-input" value="${data.rate||0}" oninput="updateDoc()" />
+        </div>
+      </div>
+      ${data.guestLinked?`<div class="qty-hint">Qty calculated from expected guests ÷ divisor factor ${divisor}. You can still edit Qty manually.</div>`:""}
+    `;
+    document.getElementById("itemsWrap").appendChild(wrap);
+    updateDoc();
+  }
+
+  function removeItem(id){document.getElementById("item-"+id)?.remove();updateDoc();}
+
+  function getItems(){
+    const rows=[];
+    document.querySelectorAll(".item-card").forEach(card=>{
+      const name=card.querySelector(".item-name-input").value.trim();
+      const desc=card.querySelector(".item-desc-input").value.trim();
+      const qty=Number(card.querySelector(".item-qty-input").value)||0;
+      const rate=Number(card.querySelector(".item-rate-input").value)||0;
+      const guestLinked=card.querySelector(".guest-linked-input")?.value==="yes";
+      const divisor=Math.max(1,Number(card.querySelector(".divisor-input")?.value)||1);
+      if(name||desc||qty||rate){
+        rows.push({name:name||"Item",desc,qty,rate,guestLinked,divisor,amount:qty*rate});
+      }
+    });
+    return rows;
+  }
+
+  function syncGuestLinkedItems(){
+    const guest=Number(v("guestCount"))||0;
+    document.querySelectorAll(".item-card").forEach(card=>{
+      const linked=card.querySelector(".guest-linked-input")?.value==="yes";
+      if(linked){
+        const divisor=Math.max(1,Number(card.querySelector(".divisor-input")?.value)||1);
+        card.querySelector(".item-qty-input").value=Math.ceil(guest/divisor);
+      }
+    });
+  }
+
+  function openItemModal(){
+    document.getElementById("modalTitle").textContent="Add Custom Item";
+    document.getElementById("modalMode").value="new";
+    document.getElementById("modalItemId").value="";
+    document.getElementById("modalItemName").value="";
+    document.getElementById("modalItemDesc").value="";
+    document.getElementById("modalItemQty").value="1";
+    document.getElementById("modalItemRate").value="0";
+    document.getElementById("modalGuestLinked").checked=false;
+    document.getElementById("modalDivisor").value="1";
+    document.getElementById("itemModal").classList.add("open");
+  }
+
+  function closeItemModal(){document.getElementById("itemModal").classList.remove("open");}
+
+  function saveLibraryItem(){
+    const mode=v("modalMode");
+    const id=v("modalItemId");
+    const name=v("modalItemName");
+    const desc=v("modalItemDesc");
+    const qty=Number(v("modalItemQty"))||1;
+    const rate=Number(v("modalItemRate"))||0;
+    const guestLinked=document.getElementById("modalGuestLinked").checked;
+    const divisor=Math.max(1,Number(v("modalDivisor"))||1);
+    if(!name){alert("Please enter item name.");return;}
+
+    if(mode==="edit"&&id){
+      const updatedItem={id,name,desc,qty,rate,guestLinked,divisor};
+      if(id.startsWith("custom_")){
+        const custom=loadCustomItems();
+        const idx=custom.findIndex(x=>x.id===id);
+        if(idx>=0)custom[idx]=updatedItem;
+        saveCustomItems(custom);
+      }else{
+        saveOverride(id,{name,desc,qty,rate,guestLinked,divisor});
+      }
+      populateDropdown(id);closeItemModal();return;
+    }
+
+    const newItem={id:"custom_"+Date.now(),name,desc,qty,rate,guestLinked,divisor};
+    const custom=loadCustomItems();
+    custom.push(newItem);
+    saveCustomItems(custom);
+    populateDropdown(newItem.id);
+    closeItemModal();
+    addItem(newItem);
+  }
+
+  function escapeHtml(str){return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+  function escapeAttr(str){return escapeHtml(str);}
+
+  const W1=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+  const W10=["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+
+  function belowThousandToWords(n){
+    let out="";
+    if(n>=100){out+=W1[Math.floor(n/100)]+" Hundred ";n=n%100;}
+    if(n>=20){out+=W10[Math.floor(n/10)]+" ";n=n%10;}
+    if(n>0){out+=W1[n]+" ";}
+    return out.trim();
+  }
+
+  function numberToWords(num){
+    num=Math.round(Number(num)||0);
+    if(num===0)return "Zero";
+    let words="";
+    const crore=Math.floor(num/10000000);
+    if(crore){words+=belowThousandToWords(crore)+" Crore ";num%=10000000;}
+    const lakh=Math.floor(num/100000);
+    if(lakh){words+=belowThousandToWords(lakh)+" Lakh ";num%=100000;}
+    const thousand=Math.floor(num/1000);
+    if(thousand){words+=belowThousandToWords(thousand)+" Thousand ";num%=1000;}
+    if(num){words+=belowThousandToWords(num);}
+    return words.trim();
+  }
+
+  function amountToWords(amount){return numberToWords(amount)+" Rupees Only";}
+
+  // ── Build the inner HTML for the doc page ────────────────
+  function buildDocHTML(){
+    const guestCount=Number(v("guestCount"))||0;
+    const items=getItems();
+    const total=items.reduce((sum,item)=>sum+item.amount,0);
+    const advancePercent=Math.max(0,Number(v("advancePercent"))||0);
+    const advance=Math.round(total*advancePercent/100);
+    const baseTerms=v("terms")||"Terms will appear here.";
+    const advanceTerm=`To confirm the booking, ${advancePercent}% advance payment of ₹${fmt(advance)} is required.`;
+    const termsText=`${advanceTerm} \n${baseTerms}`;
+
+    const itemRows=items.length
+      ?items.map((item,index)=>`
+        <tr>
+          <td style="width:30px;text-align:center;color:#777">${index+1}</td>
+          <td>
+            <div class="item-name">${escapeHtml(item.name)}</div>
+            ${item.desc?`<div class="item-desc">${escapeHtml(item.desc)}</div>`:""}
+            ${item.guestLinked?`<div class="item-desc">Calculated using expected guests ÷ ${item.divisor} = ${item.qty}</div>`:""}
+          </td>
+          <td style="width:52px;text-align:right">${item.qty}</td>
+          <td style="width:82px;text-align:right">₹${fmt(item.rate)}</td>
+          <td style="width:98px;text-align:right">₹${fmt(item.amount)}</td>
+        </tr>
+      `).join("")
+      :`<tr><td colspan="5" style="text-align:center;color:#999;padding:18px">Add proposal items</td></tr>`;
+
+    return `
+      <div class="gold-frame"></div>
+      <div class="corner c1"></div>
+      <div class="corner c2"></div>
+      <div class="corner c3"></div>
+      <div class="corner c4"></div>
+      <div class="watermark">MRE</div>
+      <div class="doc-content">
+        <div class="doc-top">
+          <img src="logo.png" class="doc-logo" alt="Logo" onerror="this.style.display='none'" />
+          <div>
+            <div class="doc-title">Marriage Function Proposal</div>
+            <div class="doc-subtitle">Mountain Retreat Ecostay, Kalimpong</div>
+            <div class="hotel-line">
+              Upper Chibbo, Kalimpong, West Bengal – 734301<br>
+              📞 6202533268 / 8434779789 &nbsp;|&nbsp; ✉ ssecostay@gmail.com
+            </div>
+          </div>
+          <div class="intro-note">${escapeHtml(v("introMessage"))}</div>
+        </div>
+
+        <div class="quote-meta">
+          <div class="meta-box">Proposal No:<b>${escapeHtml(v("quoteNo")||"—")}</b></div>
+          <div class="meta-sep"></div>
+          <div class="meta-box">Date:<b>${d(v("quoteDate"))}</b></div>
+          <div class="meta-sep"></div>
+          <div class="meta-box">Valid:<b>${escapeHtml(v("validity")||"—")}</b></div>
+        </div>
+
+        <div class="client-band">
+          <div>
+            <h4>Prepared For</h4>
+            <p><strong>${escapeHtml(v("clientName")||"Guest Family")}</strong><br>${escapeHtml(v("clientPhone")||"Contact number")}</p>
+          </div>
+          <div>
+            <h4>Function Details</h4>
+            <p>${escapeHtml(v("functionType")||"Marriage / Reception")}<br>Event Date: <strong>${d(v("eventDate"))}</strong><br>Expected Guests: <strong>${guestCount}</strong></p>
+          </div>
+        </div>
+
+        <div class="section-heading">${escapeHtml(v("packageTitle")||"Wedding Function Discussion Proposal")}</div>
+
+        <table class="quote-table">
+          <thead>
+            <tr>
+              <th style="width:30px;text-align:center">#</th>
+              <th>Particulars</th>
+              <th style="width:52px;text-align:right">Qty</th>
+              <th style="width:82px;text-align:right">Rate</th>
+              <th style="width:98px;text-align:right">Amount</th>
+            </tr>
+          </thead>
+          <tbody>${itemRows}</tbody>
+        </table>
+
+        <div class="totals">
+          <div class="totals-box">
+            <div class="total-row grand">
+              <span>Grand Total</span>
+              <span>₹${fmt(total)}</span>
+            </div>
+            <div class="total-row">
+              <span>Suggested Advance (${advancePercent}%)</span>
+              <span>₹${fmt(advance)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="amount-words"><b>Grand Total in Words</b>${amountToWords(total)}</div>
+
+        <div class="terms-heading">Terms and Conditions</div>
+        <div class="notes">${escapeHtml(termsText)}</div>
+
+        <div class="bottom-area">
+          <div class="sign-row">
+            <div class="thanks">Let us host your celebration in the hills ✦</div>
+            <div class="sign">
+              <img src="sign.png" onerror="this.style.display='none'" />
+              <div class="sign-line">Authorised Signatory</div>
+              <div style="margin-top:3px;color:var(--forest);font-weight:700;text-transform:none;letter-spacing:0">Mountain Retreat Ecostay</div>
+            </div>
+          </div>
+          <div class="doc-footer">
+            <div>Mountain Retreat Ecostay</div>
+            <div>This is an indicative discussion proposal. Final bill may vary based on confirmed requirements.</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function updateDoc(){
+    document.getElementById("proposalPage").innerHTML=buildDocHTML();
+  }
+
+  // ── Print / Save as PDF ──────────────────────────────────
+  function downloadProposalPDF(){
+    updateDoc();
+    const style=document.createElement("style");
+    style.innerHTML=`@media print{body{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}}`;
+    document.head.appendChild(style);
+    window.print();
+    style.remove();
+  }
+
+  function resetPage(){
+    if(!confirm("Reset this proposal?"))return;
+    document.getElementById("itemsWrap").innerHTML="";
+    itemCounter=0;
+    defaultLibrary.forEach(addItem);
+    updateDoc();
+  }
+
+  // ── Init ─────────────────────────────────────────────────
+  document.getElementById("quoteDate").value=new Date().toISOString().slice(0,10);
+  populateDropdown();
+  defaultLibrary.forEach(addItem);
+  updateDoc();
+</script>
+</body>
+</html>
